@@ -1,0 +1,37 @@
+{
+    "redoblantes": {
+        "letra": "R",
+        "color": "red",
+        "nombre": "Redoblante"
+    },
+    "tarolas": {
+        "letra": "T",
+        "color": "blue",
+        "nombre": "Tarola"
+    },
+    "liras": {
+        "letra": "L",
+        "color": "green",
+        "nombre": "Lira"
+    },
+    "bombos": {
+        "letra": "B",
+        "color": "black",
+        "nombre": "Bombo"
+    },
+    "platillos": {
+        "letra": "P",
+        "color": "yellow",
+        "nombre": "Platillo"
+    },
+    "guiros": {
+        "letra": "G",
+        "color": "orange",
+        "nombre": "Guiro"
+    },
+    "cueros": {
+        "letra": "C",
+        "color": "purple",
+        "nombre": "Cuero"
+    }
+}
