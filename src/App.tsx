@@ -274,7 +274,7 @@ export default function App() {
           </label>
         </div>
         <button className="cursor-pointer bg-gray-800 text-white mt-10 h-10"  onClick={() => generarPDF()}>Generar PDF</button>
-        <button className="cursor-pointer bg-gray-800 text-white mt-2 h-10"  onClick={() => generarPDF()}>Imprimir</button>
+        <button className="cursor-pointer bg-gray-800 text-white mt-2 h-10"  onClick={() => {alert("Aun no se puede imprimir")}}>Imprimir</button>
       </div>
       
     </div>
