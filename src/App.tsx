@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import CajaIntegrante from "./Compoents/cajaIntegrante";
 import escuadras from "./data/escuadras.json";
 
