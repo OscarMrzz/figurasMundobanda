@@ -1,12 +1,10 @@
-import  { useState } from "react";
+import { useState } from "react";
 import CajaIntegrante from "./Compoents/cajaIntegrante";
-import escuadras from "./data/escuadras.json";
+import escuadras from "./Data/escuadras.json";
 
 import { useRef } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-
-
 
 const arregloInicial = Array(400 - 1 - 19 - 19 - 19 - 19).fill(null);
 const filas = Array(17).fill(null);
@@ -81,7 +79,7 @@ export default function App() {
   return (
     <div className="bg-gray-200 grid grid-cols-[1fr_auto_1fr]  h-full p-10">
       <div ref={hojaReferencia}></div>
-      <div  className=" w-[612px] h-[792px] bg-white shadow-lg  pr-6 pl-6 pb-10 pt-5">
+      <div className=" w-[612px] h-[792px] bg-white shadow-lg  pr-6 pl-6 pb-10 pt-5">
         <div className="h-35 ">
           <input
             type="text"
@@ -132,7 +130,6 @@ export default function App() {
               <span> {contadorIntegrantes.C}</span>
             </p>
           </div>
-    
         </div>
         <div>
           <div className="flex gap-2 text-gray-500 font-light">
@@ -173,7 +170,7 @@ export default function App() {
               })}
             </div>
           </div>
-                <div className="mt-2">
+          <div className="mt-2">
             <p className="text-gray-600 font-bold">NOTA:</p>
             <textarea
               rows={2}
@@ -273,10 +270,21 @@ export default function App() {
             {escuadras.cueros.nombre}
           </label>
         </div>
-        <button className="cursor-pointer bg-gray-800 text-white mt-10 h-10"  onClick={() => generarPDF()}>Generar PDF</button>
-        <button className="cursor-pointer bg-gray-800 text-white mt-2 h-10"  onClick={() => {alert("Aun no se puede imprimir")}}>Imprimir</button>
+        <button
+          className="cursor-pointer bg-gray-800 text-white mt-10 h-10"
+          onClick={() => generarPDF()}
+        >
+          Generar PDF
+        </button>
+        <button
+          className="cursor-pointer bg-gray-800 text-white mt-2 h-10"
+          onClick={() => {
+            alert("Aun no se puede imprimir");
+          }}
+        >
+          Imprimir
+        </button>
       </div>
-      
     </div>
   );
 }
