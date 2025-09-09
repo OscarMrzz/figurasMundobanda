@@ -77,10 +77,10 @@ export default function App() {
     }
   };
   return (
-    <div className="bg-gray-200 grid grid-cols-[1fr_auto_1fr]  h-full p-10">
+    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] h-full p-2 lg:p-10 ">
       <div ref={hojaReferencia}></div>
-      <div className=" w-[612px] h-[792px] bg-white shadow-lg  pr-6 pl-6 pb-10 pt-5">
-        <div className="h-35 ">
+      <div className="overflow-hidden w-full max-w-[95vw] h-auto lg:w-[612px] lg:h-[792px] bg-white shadow-lg pr-2 pl-2 lg:pr-6 lg:pl-6 pb-10 pt-5 mx-auto">
+        <div className="h-40 md:h-35 ">
           <input
             type="text"
             maxLength={50}
@@ -92,7 +92,7 @@ export default function App() {
             className="w-full font-bold  border-0 focus:outline-none"
           />
 
-          <div className="grid grid-cols-4">
+          <div className="grid grid-cols-2 md:grid-cols-4">
             <p className="flex gap-2 font-light">
               {" "}
               <span className="font-bold text-gray-700">
@@ -126,7 +126,7 @@ export default function App() {
             </p>
             <p className="flex gap-2 font-light">
               {" "}
-              <span className="font-bold text-gray-700">C </span>Coristas:{" "}
+              <span className="font-bold text-gray-700">C </span>Cueros:{" "}
               <span> {contadorIntegrantes.C}</span>
             </p>
           </div>
