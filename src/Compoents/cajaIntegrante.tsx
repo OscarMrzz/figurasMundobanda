@@ -1,5 +1,6 @@
 
 const estilosEscuadra = {
+  X:" bg-gray-200"  ,                 
     R:"bg-red-200 text-red-600",
     T:"bg-yellow-200 text-yellow-600",
     L:"bg-green-200 text-green-600",
@@ -7,6 +8,7 @@ const estilosEscuadra = {
     P:"bg-purple-200 text-purple-600",
     G:"bg-pink-200 text-pink-600",
     C:"bg-teal-300 text-teal-600",
+    M:"bg-orange-200 text-orange-600",
 
 
 };
@@ -45,8 +47,7 @@ export default function Cajaescuadra({ escuadra, seleccionarCuadro,deseleccionar
       className={`bg h-7 w-7  flex items-center justify-center cursor-pointer hover:bg-blue-100`}
     >
       <div  className={`${colorClass} h-5 w-5 flex items-center justify-center select-none `}>
-
-      {escuadra}
+{escuadra !== "X" ? escuadra : null}
       </div>
     </div>
   );

@@ -29,9 +29,20 @@
         "color": "orange",
         "nombre": "Guiro"
     },
-    "cueros": {
+    "congas": {
         "letra": "C",
         "color": "purple",
-        "nombre": "Cuero"
+        "nombre": "Congas"
+    },
+    "merengueras": {
+        "letra": "M",
+        "color": "pink",
+        "nombre": "Merenguera"
+    },
+    "bases": {
+        "letra": "X",
+        "color": "gray",
+        "nombre": "Base"
     }
+
 }

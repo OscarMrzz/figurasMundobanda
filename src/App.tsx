@@ -14,7 +14,6 @@ export default function App() {
   const hojaReferencia = useRef<HTMLDivElement>(null);
   const [mausePresionado, setMausePresionado] = useState(false);
 
-
   const [escuadraSeleccionada, setEscuadraSeleccionada] = useState<
     string | null
   >("");
@@ -22,6 +21,7 @@ export default function App() {
   const [contadorIntegrantes, setContadorIntegrantes] = useState<{
     [key: string]: number;
   }>({
+    X: 0,
     R: 0,
     T: 0,
     L: 0,
@@ -29,9 +29,12 @@ export default function App() {
     P: 0,
     G: 0,
     C: 0,
+    M: 0,
   });
+  const [totalIntegrantes, setTotalIntegrantes] = useState<number>(0);
 
   const marcarCuadro = (index: number) => {
+    if (escuadraSeleccionada === null || escuadraSeleccionada === "") return;
     if (
       escuadraSeleccionada !== null &&
       celdas[index] !== escuadraSeleccionada
@@ -39,6 +42,9 @@ export default function App() {
       const nuevoArreglo = [...celdas];
       nuevoArreglo[index] = escuadraSeleccionada;
       setCeldas(nuevoArreglo);
+      if (escuadraSeleccionada !== "X") {
+        setTotalIntegrantes(totalIntegrantes + 1);
+      }
 
       setContadorIntegrantes({
         ...contadorIntegrantes,
@@ -47,11 +53,14 @@ export default function App() {
     }
   };
   const desmarcarCuadro = (index: number) => {
-    if (celdas[index] !== null) {
+    if (celdas[index] !== "") {
       const escuadraActual = celdas[index];
       const nuevoArreglo = [...celdas];
       nuevoArreglo[index] = "";
       setCeldas(nuevoArreglo);
+      if (escuadraSeleccionada !== "X") {
+        setTotalIntegrantes(totalIntegrantes - 1);
+      }
 
       setContadorIntegrantes({
         ...contadorIntegrantes,
@@ -80,43 +89,49 @@ export default function App() {
   };
   const limiarHoja = () => {
     setCeldas(arregloInicial);
-            setContadorIntegrantes({
-              R: 0,
-              T: 0,
-              L: 0,
-              B: 0,
-              P: 0,
-              G: 0,
-              C: 0,
-            });
+    setContadorIntegrantes({
+      X: 0,
+      R: 0,
+      T: 0,
+      L: 0,
+      B: 0,
+      P: 0,
+      G: 0,
+      C: 0,
+      M: 0,
+    });
+    setTotalIntegrantes(0);
   };
 
-  const handleMausePresionado =(index: number)=>{
+  const handleMausePresionado = (index: number) => {
     setMausePresionado(true);
-     marcarCuadro(index)
-  }
-  const handleMauseEntrado =(index: number )=>{
-    if(mausePresionado){
-     marcarCuadro(index)
+    marcarCuadro(index);
+  };
+  const handleMauseEntrado = (index: number) => {
+    if (mausePresionado) {
+      marcarCuadro(index);
     }
-  }
+  };
   return (
-    <div onMouseUp={()=>   setMausePresionado(false)}  className="min-h-screen grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] h-full p-2 lg:p-10 ">
+    <div
+      onMouseUp={() => setMausePresionado(false)}
+      className="min-h-screen grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] h-full p-2 lg:p-10 "
+    >
       <div ref={hojaReferencia}></div>
       <div className="overflow-hidden w-full max-w-[95vw] h-auto lg:w-[612px] lg:h-[792px] bg-white shadow-lg pr-2 pl-2 lg:pr-6 lg:pl-6 pb-10 pt-5 mx-auto">
-        <div className="h-40 md:h-35 ">
+        <div className="h-40  ">
           <input
             type="text"
             maxLength={50}
-            className="text-2xl w-full font-bold  border-0 focus:outline-none items-center justify-center"
+            className="text-gray-600 text-2xl w-full font-bold  border-0 focus:outline-none items-center justify-center"
           />
           <input
             type="text"
             maxLength={55}
-            className="w-full font-bold  border-0 focus:outline-none"
+            className="text-gray-600 w-full font-bold  border-0 focus:outline-none"
           />
 
-          <div className="grid grid-cols-2 md:grid-cols-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 border-b-2 border-t-2 border-gray-200 py-2">
             <p className="flex gap-2 font-light">
               {" "}
               <span className="font-bold text-gray-700">
@@ -150,10 +165,19 @@ export default function App() {
             </p>
             <p className="flex gap-2 font-light">
               {" "}
-              <span className="font-bold text-gray-700">C </span>Cueros:{" "}
+              <span className="font-bold text-gray-700">C </span>Conga:{" "}
               <span> {contadorIntegrantes.C}</span>
             </p>
+            <p className="flex gap-2 font-light">
+              {" "}
+              <span className="font-bold text-gray-700">
+                C{" "}
+              </span>Merengueras: <span> {contadorIntegrantes.M}</span>
+            </p>
           </div>
+          <p className="flex gap-2 font-bold text-gray-600">
+            Total <span> {totalIntegrantes}</span>
+          </p>
         </div>
         <div>
           <div className="flex gap-2 text-gray-500 font-light">
@@ -181,17 +205,20 @@ export default function App() {
                 </span>
               ))}
             </div>
-            <div  className="pl-2 w-full h-full flex flex-wrap  place-content-start border-t-2 border-l-2 pt-2  border-gray-300">
+            <div className="pl-2 w-full h-full flex flex-wrap  place-content-start border-t-2 border-l-2 pt-2  border-gray-300">
               {celdas.map((celda, index) => {
                 return (
                   <CajaIntegrante
                     key={index}
-               
                     escuadra={celda}
                     seleccionarCuadro={() => marcarCuadro(index)}
                     deseleccionarCuadro={() => desmarcarCuadro(index)}
-                    mausePresionado={()=>{handleMausePresionado(index)}}
-                    mauseEntrado={()=>{handleMauseEntrado(index)}}
+                    mausePresionado={() => {
+                      handleMausePresionado(index);
+                    }}
+                    mauseEntrado={() => {
+                      handleMauseEntrado(index);
+                    }}
                   />
                 );
               })}
@@ -219,6 +246,17 @@ export default function App() {
       <div className=" flex flex-col  p-10 ">
         <h1 className="text-2xl text-gray-700 font-bold">ESCUDRAS</h1>
         <div className="flex flex-col gap-2 bg-[#1b4965] w-60 p-10 text-white">
+          <label className="cursor-pointer flex gap-2 border-b-2">
+            <input
+              className="cursor-pointer"
+              id={escuadras.bases.letra}
+              type="radio"
+              name="eleccionEscuadra"
+              value={escuadras.bases.letra}
+              onChange={() => eleccionEscuadra(escuadras.bases.letra)}
+            />
+            {escuadras.bases.nombre}
+          </label>
           <label className="cursor-pointer flex gap-2">
             <input
               className="cursor-pointer"
@@ -288,13 +326,24 @@ export default function App() {
           <label className="cursor-pointer flex gap-2">
             <input
               className="cursor-pointer"
-              id={escuadras.cueros.letra}
+              id={escuadras.congas.letra}
               type="radio"
               name="eleccionEscuadra"
-              value={escuadras.cueros.letra}
-              onChange={() => eleccionEscuadra(escuadras.cueros.letra)}
+              value={escuadras.congas.letra}
+              onChange={() => eleccionEscuadra(escuadras.congas.letra)}
             />
-            {escuadras.cueros.nombre}
+            {escuadras.congas.nombre}
+          </label>
+          <label className="cursor-pointer flex gap-2">
+            <input
+              className="cursor-pointer"
+              id={escuadras.merengueras.letra}
+              type="radio"
+              name="eleccionEscuadra"
+              value={escuadras.merengueras.letra}
+              onChange={() => eleccionEscuadra(escuadras.merengueras.letra)}
+            />
+            {escuadras.merengueras.nombre}
           </label>
         </div>
         <button
@@ -313,7 +362,9 @@ export default function App() {
         </button>
         <button
           className="cursor-pointer bg-gray-800 text-white mt-2 h-10"
-          onClick={() => { limiarHoja() }}
+          onClick={() => {
+            limiarHoja();
+          }}
         >
           Limpiar
         </button>
