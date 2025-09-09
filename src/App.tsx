@@ -12,6 +12,8 @@ const columnas = Array(19).fill(null);
 
 export default function App() {
   const hojaReferencia = useRef<HTMLDivElement>(null);
+  const [mausePresionado, setMausePresionado] = useState(false);
+
 
   const [escuadraSeleccionada, setEscuadraSeleccionada] = useState<
     string | null
@@ -76,8 +78,30 @@ export default function App() {
       pdf.save("hoja_de_trabajo.pdf");
     }
   };
+  const limiarHoja = () => {
+    setCeldas(arregloInicial);
+            setContadorIntegrantes({
+              R: 0,
+              T: 0,
+              L: 0,
+              B: 0,
+              P: 0,
+              G: 0,
+              C: 0,
+            });
+  };
+
+  const handleMausePresionado =(index: number)=>{
+    setMausePresionado(true);
+     marcarCuadro(index)
+  }
+  const handleMauseEntrado =(index: number )=>{
+    if(mausePresionado){
+     marcarCuadro(index)
+    }
+  }
   return (
-    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] h-full p-2 lg:p-10 ">
+    <div onMouseUp={()=>   setMausePresionado(false)}  className="min-h-screen grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] h-full p-2 lg:p-10 ">
       <div ref={hojaReferencia}></div>
       <div className="overflow-hidden w-full max-w-[95vw] h-auto lg:w-[612px] lg:h-[792px] bg-white shadow-lg pr-2 pl-2 lg:pr-6 lg:pl-6 pb-10 pt-5 mx-auto">
         <div className="h-40 md:h-35 ">
@@ -157,14 +181,17 @@ export default function App() {
                 </span>
               ))}
             </div>
-            <div className="pl-2 w-full h-full flex flex-wrap  place-content-start border-t-2 border-l-2 pt-2  border-gray-300">
+            <div  className="pl-2 w-full h-full flex flex-wrap  place-content-start border-t-2 border-l-2 pt-2  border-gray-300">
               {celdas.map((celda, index) => {
                 return (
                   <CajaIntegrante
                     key={index}
+               
                     escuadra={celda}
                     seleccionarCuadro={() => marcarCuadro(index)}
                     deseleccionarCuadro={() => desmarcarCuadro(index)}
+                    mausePresionado={()=>{handleMausePresionado(index)}}
+                    mauseEntrado={()=>{handleMauseEntrado(index)}}
                   />
                 );
               })}
@@ -283,6 +310,12 @@ export default function App() {
           }}
         >
           Imprimir
+        </button>
+        <button
+          className="cursor-pointer bg-gray-800 text-white mt-2 h-10"
+          onClick={() => { limiarHoja() }}
+        >
+          Limpiar
         </button>
       </div>
     </div>
