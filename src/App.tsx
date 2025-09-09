@@ -80,7 +80,7 @@ export default function App() {
   };
   return (
     <div className="bg-gray-200 grid grid-cols-[1fr_auto_1fr]  h-full p-10">
-      <div ref={hojaReferencia}>Hola</div>
+      <div ref={hojaReferencia}></div>
       <div  className=" w-[612px] h-[792px] bg-white shadow-lg  pr-6 pl-6 pb-10 pt-5">
         <div className="h-35 ">
           <input
@@ -273,7 +273,8 @@ export default function App() {
             {escuadras.cueros.nombre}
           </label>
         </div>
-        <button className="cursor-pointer bg-blue-500 "  onClick={() => generarPDF()}>Generar PDF</button>
+        <button className="cursor-pointer bg-gray-800 text-white mt-10 h-10"  onClick={() => generarPDF()}>Generar PDF</button>
+        <button className="cursor-pointer bg-gray-800 text-white mt-2 h-10"  onClick={() => generarPDF()}>Imprimir</button>
       </div>
       
     </div>
