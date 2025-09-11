@@ -11,8 +11,235 @@ body {
     width: 100vw;
 }
 
-/* en tu globals.css o index.css */
-::selection {
-  background: transparent; /* quita el color azul */
-  color: inherit;          /* mantiene el color del texto */
+
+
+
+/* =================== */
+/* Contenedor de la hoja */
+.hoja {
+  width: 750px;          /* tamaño carta en px */
+  height: 950px;         /* tamaño carta en px */
+  background-color: #ffffff; /* bg-white */
+  padding: 24px;         /* pr-6 pl-6 pt-6 pb-10 (aprox) */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* shadow-lg */
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+/* Header de la hoja */
+.hoja__header {
+  height: 220px;         /* altura aproximada para cabecera */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Titulo grande */
+.hoja__titulo {
+  font-size: 24px;       /* text-2xl */
+  font-weight: bold;     /* font-bold */
+  color: #4b5563;        /* text-gray-600 */
+  margin-bottom: 8px;
+
+}
+
+/* Subtitulo */
+.hoja__subtitulo {
+  font-size: 18px;       /* text-xl o base */
+  font-weight: bold;
+  color: #4b5563;        /* text-gray-600 */
+  margin-bottom: 12px;
+  
+}
+.hoja__titulo:focus {
+  border: 2px solid #e0e8fc; /* azul, puedes cambiar el color */
+    outline: none; /* quita el borde azul por defecto */
+
+
+}
+.hoja__subtitulo:focus {
+  border: 2px solid #e0e8fc; /* azul, puedes cambiar el color */
+    outline: none; /* quita el borde azul por defecto */
+
+
+}
+
+/* Contenedor de estadísticas de escuadras */
+.hoja__stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  border-top: 2px solid #d1d5db;  /* border-gray-200 */
+  border-bottom: 2px solid #d1d5db;
+  padding: 8px 0;
+}
+
+/* Cada estadística */
+.hoja__stat {
+  font-weight: 300;        /* font-light */
+  color: #4b5563;          /* text-gray-700 para labels */
+}
+
+.hoja__stat-span {
+  font-weight: bold;
+}
+
+.hoja__total {
+  display: flex;               /* flex */
+  gap: 8px;                    /* gap-2 = 0.5rem ≈ 8px */
+  font-weight: bold;            /* font-bold */
+  color: #4b5563;              /* text-gray-600 */
+}
+
+.hoja__contenedor-index {
+  display: flex;               /* flex */
+  gap: 8px;                    /* gap-2 = 0.5rem ≈ 8px */
+  font-weight: 300;            /* font-light */
+  color: #6b7280;              /* text-gray-500 */
+}
+
+.hoja__cuerpo-grid{
+  display: flex;
+}
+.hoja__cuerpo-grid::selection{
+  background: transparent;
+}
+
+
+/* Contenedor de cuadrícula de celdas */
+.hoja__grid {
+  display: flex;
+  flex-wrap: wrap;
+  border-top: 2px solid #d1d5db;
+  border-left: 2px solid #d1d5db;
+  padding-top: 8px;
+}
+
+.indexGrid {
+  width: 20px;               /* w-5 */
+  height: 20px;              /* h-5 */
+  display: flex;             /* justify-center + items-center requieren flex */
+  align-items: center;       /* items-center */
+  justify-content: center;
+    /* justify-center */
+}
+
+.contenedorindexGrid {
+  display: flex;               /* flex */
+  flex-direction: column;      /* flex-col */
+  gap: 7px;                    /* gap-2 = 0.5rem ≈ 8px */
+  font-weight: 300;            /* font-light */
+  color: #6b7280;              /* text-gray-500 */
+}
+.contenedorindexGrid-row {
+  display: flex;               /* flex */
+  flex-direction: column;      /* flex-col */
+  gap: 8px;                    /* gap-2 = 0.5rem ≈ 8px */
+  font-weight: 300;            /* font-light */
+  color: #6b7280;              /* text-gray-500 */
+}
+
+
+
+/* Cuadrado dentro de la celda (color según escuadra) */
+.hoja__cuadro {
+  width: 20px;               /* h-5 w-5 */
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.hoja__nota {
+  font-weight: bold;       /* font-bold */
+  color: #4b5563;          /* text-gray-600 */
+}
+
+
+.hoja__cuerpo-nota {
+  font-weight: 300;          /* font-light */
+  margin-bottom: 16px;       /* mb-4 = 1rem ≈ 16px */
+  width: 100%;               /* w-full */
+  border: 0;                 /* border-0 */
+  outline: none;             /* focus:outline-none */
+  resize: none;              /* resize-none */
+}
+.hoja__cuerpo-nota:focus {
+  border: 2px solid #e0e8fc; /* azul, puedes cambiar el color */
+    outline: none; /* quita el borde azul por defecto */
+
+
+}
+
+
+/* ----------------------------------- */
+/* estilosEscuadra.css */
+
+.caja {
+  height: 28px;   /* h-7 */
+  width: 28px;    /* w-7 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none; /* select-none */
+}
+
+.caja:hover {
+  background-color: #bfdbfe; /* hover:bg-blue-100 */
+}
+
+.escuadraGenera {
+  height: 20px;               /* h-5 */
+  width: 20px;                /* w-5 */
+  display: flex;              /* flex */
+  align-items: center;        /* items-center */
+  justify-content: center;    /* justify-center */
+  user-select: none;          /* select-none */
+}
+
+.escuadra-X {
+  background-color: #e5e7eb; /* bg-gray-200 */
+  color: #9ca3af;            /* text-gray-400 */
+}
+
+.escuadra-R {
+  background-color: #fecaca; /* bg-red-200 */
+  color: #b91c1c;            /* text-red-600 */
+}
+
+.escuadra-T {
+  background-color: #fef08a; /* bg-yellow-200 */
+  color: #ca8a04;            /* text-yellow-600 */
+}
+
+.escuadra-L {
+  background-color: #bbf7d0; /* bg-green-200 */
+  color: #16a34a;            /* text-green-600 */
+}
+
+.escuadra-B {
+  background-color: #bfdbfe; /* bg-blue-200 */
+  color: #1d4ed8;            /* text-blue-600 */
+}
+
+.escuadra-P {
+  background-color: #e9d5ff; /* bg-purple-200 */
+  color: #7e22ce;            /* text-purple-600 */
+}
+
+.escuadra-G {
+  background-color: #fbcfe8; /* bg-pink-200 */
+  color: #db2777;            /* text-pink-600 */
+}
+
+.escuadra-C {
+  background-color: #99f6e4; /* bg-teal-300 */
+  color: #0f766e;            /* text-teal-600 */
+}
+
+.escuadra-M {
+  background-color: #fed7aa; /* bg-orange-200 */
+  color: #c2410c;            /* text-orange-600 */
 }
