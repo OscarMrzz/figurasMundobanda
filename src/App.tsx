@@ -82,7 +82,7 @@ export default function App() {
 
     const opt = {
       margin: 0,
-      filename: "ejemplo.pdf",
+      filename: "Figura.pdf",
       image: { type: "jpeg", quality: 1 }, 
       html2canvas: { 
         scale: 2, 
