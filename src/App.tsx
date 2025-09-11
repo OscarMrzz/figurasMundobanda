@@ -3,14 +3,16 @@ import CajaIntegrante from "./Compoents/cajaIntegrante";
 import escuadras from "./Data/escuadras.json";
 
 import { useRef } from "react";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 
-const arregloInicial = Array(400 - 1 - 19 - 19 - 19 - 19).fill(null);
-const filas = Array(17).fill(null);
-const columnas = Array(19).fill(null);
+import html2pdf from "html2pdf.js";
+
+
+const arregloInicial = Array(400+13+9+10).fill(null);
+const filas = Array(17+2).fill(null);
+const columnas = Array(19+5).fill(null);
 
 export default function App() {
+
   const hojaReferencia = useRef<HTMLDivElement>(null);
   const [mausePresionado, setMausePresionado] = useState(false);
 
@@ -74,19 +76,26 @@ export default function App() {
     setEscuadraSeleccionada(letra);
   };
 
-  const generarPDF = async () => {
-    if (hojaReferencia.current) {
-      const canvas = await html2canvas(hojaReferencia.current);
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF({
-        orientation: "portrait",
-        unit: "pt",
-        format: [612, 792], // Tamaño carta en puntos
-      });
-      pdf.addImage(imgData, "PNG", 0, 0, 612, 792);
-      pdf.save("hoja_de_trabajo.pdf");
-    }
-  };
+ const generarPDF = async () => {
+  if (hojaReferencia.current) {
+    const element = hojaReferencia.current;
+
+    const opt = {
+      margin: 0,
+      filename: "ejemplo.pdf",
+      image: { type: "jpeg", quality: 1 }, 
+      html2canvas: { 
+        scale: 2, 
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: null // 🔥 evita que ponga todo negro
+      },
+      jsPDF: { unit: "mm", format: "letter", orientation: "portrait" }
+    };
+
+    html2pdf().set(opt).from(element).save();
+  }
+};
   const limiarHoja = () => {
     setCeldas(arregloInicial);
     setContadorIntegrantes({
@@ -117,95 +126,95 @@ export default function App() {
       onMouseUp={() => setMausePresionado(false)}
       className="min-h-screen grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] h-full p-2 lg:p-10 "
     >
-      <div ref={hojaReferencia}></div>
-      <div className="overflow-hidden w-full max-w-[95vw] h-auto lg:w-[612px] lg:h-[792px] bg-white shadow-lg pr-2 pl-2 lg:pr-6 lg:pl-6 pb-10 pt-5 mx-auto">
-        <div className="h-40  ">
+      <div ></div>
+      <div ref={hojaReferencia} className="hoja">
+        <div className="hoja__header">
           <input
             type="text"
             maxLength={50}
-            className="text-gray-600 text-2xl w-full font-bold  border-0 focus:outline-none items-center justify-center"
+            className="hoja__titulo"
           />
           <input
             type="text"
             maxLength={55}
-            className="text-gray-600 w-full font-bold  border-0 focus:outline-none"
+            className="hoja__subtitulo"
           />
 
-          <div className="grid grid-cols-2 md:grid-cols-4 border-b-2 border-t-2 border-gray-200 py-2">
-            <p className="flex gap-2 font-light">
-              {" "}
-              <span className="font-bold text-gray-700">
-                R{" "}
+          <div className="hoja__stats">
+            <p className="hoja__stat">
+              
+              <span className="hoja__stat-span">
+                
               </span>Redoblantes: <span> {contadorIntegrantes.R}</span>{" "}
             </p>
-            <p className="flex gap-2 font-light">
-              {" "}
-              <span className="font-bold text-gray-700">T </span>Tarolas:{" "}
+            <p className="hoja__stat">
+              
+              <span className="hoja__stat-span"></span>Tarolas:{" "}
               <span> {contadorIntegrantes.T}</span>
             </p>
-            <p className="flex gap-2 font-light">
-              {" "}
-              <span className="font-bold text-gray-700">L </span>Liras:{" "}
+            <p className="hoja__stat">
+              
+              <span className="hoja__stat-span"></span>Liras:{" "}
               <span> {contadorIntegrantes.L}</span>
             </p>
-            <p className="flex gap-2 font-light">
-              {" "}
-              <span className="font-bold text-gray-700">B </span>Bombos:{" "}
+            <p className="hoja__stat">
+              
+              <span className="hoja__stat-span"></span>Bombos:{" "}
               <span> {contadorIntegrantes.B}</span>
             </p>
-            <p className="flex gap-2 font-light">
-              {" "}
-              <span className="font-bold text-gray-700">P </span>Platillos:{" "}
+            <p className="hoja__stat">
+             
+              <span className="hoja__stat-span"></span>Platillos:{" "}
               <span> {contadorIntegrantes.P}</span>
             </p>
-            <p className="flex gap-2 font-light">
-              {" "}
-              <span className="font-bold text-gray-700">G </span>Guiros:{" "}
+            <p className="hoja__stat">
+             
+              <span className="hoja__stat-span"></span>Guiros:{" "}
               <span> {contadorIntegrantes.G}</span>
             </p>
-            <p className="flex gap-2 font-light">
-              {" "}
-              <span className="font-bold text-gray-700">C </span>Conga:{" "}
+            <p className="hoja__stat">
+             
+              <span className="hoja__stat-span"></span>Conga:{" "}
               <span> {contadorIntegrantes.C}</span>
             </p>
-            <p className="flex gap-2 font-light">
-              {" "}
-              <span className="font-bold text-gray-700">
-                C{" "}
+            <p className="hoja__stat">
+             
+              <span className="hoja__stat-span">
+                
               </span>Merengueras: <span> {contadorIntegrantes.M}</span>
             </p>
           </div>
-          <p className="flex gap-2 font-bold text-gray-600">
+          <p className="hoja__total">
             Total <span> {totalIntegrantes}</span>
           </p>
         </div>
         <div>
-          <div className="flex gap-2 text-gray-500 font-light">
-            <span className="w-5 h-5 justify-center items-center"></span>
+          <div className="hoja__contenedor-index">
+            <span className="ml-4.5"></span>
             {columnas.map((_, colIndex) => (
               <span
                 key={colIndex}
-                className="w-5 h-5 justify-center items-center"
+                className="indexGrid"
               >
                 {colIndex < 9 ? `0${colIndex + 1}` : colIndex + 1}
               </span>
             ))}
           </div>
-          <div className="flex">
-            <div className="flex flex-col gap-2  text-gray-500 font-light">
-              <span className="w-5 h-5 justify-center items-center mt-2">
-                01
+          <div className="hoja__cuerpo-grid">
+            <div className="contenedorindexGrid-row">
+              <span className="mb-1.75 ">
+              
               </span>
               {filas.slice(1).map((_, rowIndex) => (
                 <span
                   key={rowIndex}
-                  className="w-5 h-5 justify-center items-center"
+                  className="indexGrid"
                 >
-                  {rowIndex + 2 < 10 ? `0${rowIndex + 2}` : rowIndex + 2}
+                  {rowIndex  < 9 ? `0${rowIndex + 1}` : rowIndex + 1}
                 </span>
               ))}
             </div>
-            <div className="pl-2 w-full h-full flex flex-wrap  place-content-start border-t-2 border-l-2 pt-2  border-gray-300">
+            <div className="hoja__grid">
               {celdas.map((celda, index) => {
                 return (
                   <CajaIntegrante
@@ -225,11 +234,11 @@ export default function App() {
             </div>
           </div>
           <div className="mt-2">
-            <p className="text-gray-600 font-bold">NOTA:</p>
+            <p className="hoja__nota">NOTA:</p>
             <textarea
-              rows={2}
-              maxLength={132}
-              className="font-light mb-4 w-full border-0 focus:outline-none resize-none"
+              rows={4}
+              maxLength={205}
+              className="hoja__cuerpo-nota"
               onInput={(e) => {
                 const target = e.target as HTMLTextAreaElement;
                 if (target.value.split("\n").length > 2) {
@@ -352,14 +361,7 @@ export default function App() {
         >
           Generar PDF
         </button>
-        <button
-          className="cursor-pointer bg-gray-800 text-white mt-2 h-10"
-          onClick={() => {
-            alert("Aun no se puede imprimir");
-          }}
-        >
-          Imprimir
-        </button>
+    
         <button
           className="cursor-pointer bg-gray-800 text-white mt-2 h-10"
           onClick={() => {
@@ -372,3 +374,5 @@ export default function App() {
     </div>
   );
 }
+
+
