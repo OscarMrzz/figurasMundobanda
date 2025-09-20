@@ -8,7 +8,7 @@ import html2pdf from "html2pdf.js";
 import JuecesIcono from "./Compoents/Iconos/JuecesIcono";
 import FlechaizquierdaIcono from "./Compoents/Iconos/FlechaIzquierdaIcono";
 import FlechaDerecgaIcono from "./Compoents/Iconos/FlechaDerecgaIcono";
-import EntreIndexIcono from "./Compoents/Iconos/EntreIndexIcono";
+
 
 const arregloInicial = Array(400 + 13 + 9 + 10).fill(null);
 const filas = Array(17 + 2).fill(null);
