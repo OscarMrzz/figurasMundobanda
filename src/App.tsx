@@ -5,14 +5,16 @@ import escuadras from "./Data/escuadras.json";
 import { useRef } from "react";
 
 import html2pdf from "html2pdf.js";
+import JuecesIcono from "./Compoents/Iconos/JuecesIcono";
+import FlechaizquierdaIcono from "./Compoents/Iconos/FlechaIzquierdaIcono";
+import FlechaDerecgaIcono from "./Compoents/Iconos/FlechaDerecgaIcono";
+import EntreIndexIcono from "./Compoents/Iconos/EntreIndexIcono";
 
-
-const arregloInicial = Array(400+13+9+10).fill(null);
-const filas = Array(17+2).fill(null);
-const columnas = Array(19+5).fill(null);
+const arregloInicial = Array(400 + 13 + 9 + 10).fill(null);
+const filas = Array(17 + 2).fill(null);
+const columnas = Array(19 + 5).fill(null);
 
 export default function App() {
-
   const hojaReferencia = useRef<HTMLDivElement>(null);
   const [mausePresionado, setMausePresionado] = useState(false);
 
@@ -76,26 +78,26 @@ export default function App() {
     setEscuadraSeleccionada(letra);
   };
 
- const generarPDF = async () => {
-  if (hojaReferencia.current) {
-    const element = hojaReferencia.current;
+  const generarPDF = async () => {
+    if (hojaReferencia.current) {
+      const element = hojaReferencia.current;
 
-    const opt = {
-      margin: 0,
-      filename: "Figura.pdf",
-      image: { type: "jpeg", quality: 1 }, 
-      html2canvas: { 
-        scale: 2, 
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: null // 🔥 evita que ponga todo negro
-      },
-      jsPDF: { unit: "mm", format: "letter", orientation: "portrait" }
-    };
+      const opt = {
+        margin: 0,
+        filename: "Figura.pdf",
+        image: { type: "jpeg", quality: 1 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: null, // 🔥 evita que ponga todo negro
+        },
+        jsPDF: { unit: "mm", format: "letter", orientation: "portrait" },
+      };
 
-    html2pdf().set(opt).from(element).save();
-  }
-};
+      html2pdf().set(opt).from(element).save();
+    }
+  };
   const limiarHoja = () => {
     setCeldas(arregloInicial);
     setContadorIntegrantes({
@@ -124,64 +126,51 @@ export default function App() {
   return (
     <div
       onMouseUp={() => setMausePresionado(false)}
-      className="min-h-screen grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] h-full p-2 lg:p-10 "
+      className=" min-h-screen grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] h-full p-2 lg:p-10 "
     >
-      <div ></div>
+      <div className=" flex flex-col "> 
+        <p className="text-2xl text-gray-300 font-bold ">FIGURAS MUNDO BANDA</p>
+        <p className="text-xl text-gray-400 font-bold ">VERSION: 1.3</p>
+        <p className="text-xl text-gray-400  ">19 de septiembre 2025</p>
+        <p></p>
+        </div>
       <div ref={hojaReferencia} className="hoja">
         <div className="hoja__header">
-          <input
-            type="text"
-            maxLength={50}
-            className="hoja__titulo"
-          />
-          <input
-            type="text"
-            maxLength={55}
-            className="hoja__subtitulo"
-          />
+          <input type="text" maxLength={50} className="hoja__titulo" />
+          <input type="text" maxLength={55} className="hoja__subtitulo" />
 
           <div className="hoja__stats">
             <p className="hoja__stat">
-              
-              <span className="hoja__stat-span">
-                
-              </span>Redoblantes: <span> {contadorIntegrantes.R}</span>{" "}
+              <span className="hoja__stat-span"></span>Redoblantes:{" "}
+              <span> {contadorIntegrantes.R}</span>{" "}
             </p>
             <p className="hoja__stat">
-              
               <span className="hoja__stat-span"></span>Tarolas:{" "}
               <span> {contadorIntegrantes.T}</span>
             </p>
             <p className="hoja__stat">
-              
               <span className="hoja__stat-span"></span>Liras:{" "}
               <span> {contadorIntegrantes.L}</span>
             </p>
             <p className="hoja__stat">
-              
               <span className="hoja__stat-span"></span>Bombos:{" "}
               <span> {contadorIntegrantes.B}</span>
             </p>
             <p className="hoja__stat">
-             
               <span className="hoja__stat-span"></span>Platillos:{" "}
               <span> {contadorIntegrantes.P}</span>
             </p>
             <p className="hoja__stat">
-             
               <span className="hoja__stat-span"></span>Guiros:{" "}
               <span> {contadorIntegrantes.G}</span>
             </p>
             <p className="hoja__stat">
-             
               <span className="hoja__stat-span"></span>Conga:{" "}
               <span> {contadorIntegrantes.C}</span>
             </p>
             <p className="hoja__stat">
-             
-              <span className="hoja__stat-span">
-                
-              </span>Merengueras: <span> {contadorIntegrantes.M}</span>
+              <span className="hoja__stat-span"></span>Merengueras:{" "}
+              <span> {contadorIntegrantes.M}</span>
             </p>
           </div>
           <p className="hoja__total">
@@ -189,30 +178,17 @@ export default function App() {
           </p>
         </div>
         <div>
-          <div className="hoja__contenedor-index">
-            <span className="ml-4.5"></span>
-            {columnas.map((_, colIndex) => (
-              <span
-                key={colIndex}
-                className="indexGrid"
-              >
-                {colIndex < 9 ? `0${colIndex + 1}` : colIndex + 1}
-              </span>
-            ))}
-          </div>
           <div className="hoja__cuerpo-grid">
             <div className="contenedorindexGrid-row">
-              <span className="mb-1.75 ">
-              
-              </span>
-              {filas.slice(1).map((_, rowIndex) => (
-                <span
-                  key={rowIndex}
-                  className="indexGrid"
-                >
-                  {rowIndex  < 9 ? `0${rowIndex + 1}` : rowIndex + 1}
-                </span>
-              ))}
+              <span className="mb-1.75 "></span>
+              {filas
+                .slice(1)
+                .map((_, rowIndex) => filas.length - 1 - rowIndex)
+                .map((reverseIndex) => (
+                  <span key={reverseIndex} className="indexGrid">
+                    {reverseIndex < 10 ? `0${reverseIndex}` : reverseIndex}
+                  </span>
+                ))}
             </div>
             <div className="hoja__grid">
               {celdas.map((celda, index) => {
@@ -233,28 +209,53 @@ export default function App() {
               })}
             </div>
           </div>
-          <div className="mt-2">
-            <p className="hoja__nota">NOTA:</p>
-            <textarea
-              rows={4}
-              maxLength={205}
-              className="hoja__cuerpo-nota"
-              onInput={(e) => {
-                const target = e.target as HTMLTextAreaElement;
-                if (target.value.split("\n").length > 2) {
-                  target.value = target.value
-                    .split("\n")
-                    .slice(0, 2)
-                    .join("\n");
-                }
-              }}
-            />
+          <div>
+            <div className="hoja__contenedor-index">
+              <span className="ml-4.5"></span>
+            {columnas.map((_, colIndex) => (
+              <span
+                key={colIndex}
+                className="indexGrid"
+              >
+                {colIndex < 9 ? `0${colIndex + 1}` : colIndex + 1}
+              </span>
+              ))}
+            </div>
+            <div className="hoja__Orientacion">
+              <span className="hoja__origientacion-item">
+                <FlechaizquierdaIcono /> IZQUIERDA
+              </span>
+              <span className="hoja__origientacion-item">
+                <JuecesIcono /> JURADO
+              </span>
+              <span className="hoja__origientacion-item">
+                DERECHA <FlechaDerecgaIcono />
+              </span>
+            </div>
+
+            <div className="mt-2">
+              <p className="hoja__nota">NOTA:</p>
+              <textarea
+                rows={3}
+                maxLength={150}
+                className="hoja__cuerpo-nota"
+                onInput={(e) => {
+                  const target = e.target as HTMLTextAreaElement;
+                  if (target.value.split("\n").length > 2) {
+                    target.value = target.value
+                      .split("\n")
+                      .slice(0, 2)
+                      .join("\n");
+                  }
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>
       <div className=" flex flex-col  p-10 ">
-        <h1 className="text-2xl text-gray-700 font-bold">ESCUDRAS</h1>
-        <div className="flex flex-col gap-2 bg-[#1b4965] w-60 p-10 text-white">
+        <h1 className="text-2xl text-gray-400 font-bold">ESCUADRAS</h1>
+        <div className="flex flex-col gap-2 bg-gray-800 w-60 p-10 text-white">
           <label className="cursor-pointer flex gap-2 border-b-2">
             <input
               className="cursor-pointer"
@@ -356,14 +357,14 @@ export default function App() {
           </label>
         </div>
         <button
-          className="cursor-pointer bg-gray-800 text-white mt-10 h-10"
+          className="w-60 cursor-pointer bg-gray-800 text-white mt-10 h-10"
           onClick={() => generarPDF()}
         >
           Generar PDF
         </button>
-    
+
         <button
-          className="cursor-pointer bg-gray-800 text-white mt-2 h-10"
+          className="w-60 cursor-pointer bg-gray-800 text-white mt-2 h-10"
           onClick={() => {
             limiarHoja();
           }}
@@ -374,5 +375,3 @@ export default function App() {
     </div>
   );
 }
-
-

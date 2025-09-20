@@ -1,0 +1,19 @@
+import React from "react";
+
+export default function EntreIndexIcono() {
+  return (
+    <div className="">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="6"
+        height="6"
+        viewBox="0 0 24 24"
+        fill="#4b5563"
+        className="icon icon-tabler icons-tabler-filled icon-tabler-circle"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M7 3.34a10 10 0 1 1 -4.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 4.995 -8.336z" />
+      </svg>
+    </div>
+  );
+}
