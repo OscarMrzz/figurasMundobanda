@@ -18,7 +18,7 @@ body {
 /* Contenedor de la hoja */
 .hoja {
   width: 750px;          /* tamaño carta en px */
-  height: 950px;         /* tamaño carta en px */
+  height: 1020px;         /* tamaño carta en px */
   background-color: #ffffff; /* bg-white */
   padding: 24px;         /* pr-6 pl-6 pt-6 pb-10 (aprox) */
   box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* shadow-lg */
@@ -111,7 +111,8 @@ body {
   display: flex;
   flex-wrap: wrap;
   border-bottom: 2px solid #d1d5db;
-  border-left: 2px solid #d1d5db;
+  border-top:2px solid #d1d5db;
+ /*  border-left: 2px solid #d1d5db; */
   padding-top: 8px;
 }
 
@@ -170,6 +171,20 @@ body {
     outline: none; /* quita el borde azul por defecto */
 
 
+}
+
+.hoja__inputFooter{
+   font-weight: 300;          /* font-light */
+  /* mb-4 = 1rem ≈ 16px */
+  width: 100%;               /* w-full */
+  border: 0;                 /* border-0 */
+  outline: none;             /* focus:outline-none */
+  resize: none;   
+
+}
+.hoja__inputFooter:focus {
+  border: 2px solid #e0e8fc; /* azul, puedes cambiar el color */
+    outline: none; /* quita el borde azul por defecto */
 }
 
 
@@ -251,8 +266,7 @@ body {
   font-weight:200;      /* font-bold */
   color: #4b5563;        /* text-gray-600 */
   margin-bottom: 8px;
-  padding-left: 25px;
-  padding-right: 25px;
+  
   margin-top: 25px;
 
 }

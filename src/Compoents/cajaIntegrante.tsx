@@ -17,6 +17,7 @@ type Props = {
   deseleccionarCuadro: () => void;
   mausePresionado: () => void;
   mauseEntrado: () => void;
+ 
 };
 
 export default function Cajaescuadra({ escuadra, seleccionarCuadro,deseleccionarCuadro,mauseEntrado,mausePresionado }: Props) {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CajaIntegrante from "./Compoents/cajaIntegrante";
 import escuadras from "./Data/escuadras.json";
 
@@ -9,8 +9,7 @@ import JuecesIcono from "./Compoents/Iconos/JuecesIcono";
 import FlechaizquierdaIcono from "./Compoents/Iconos/FlechaIzquierdaIcono";
 import FlechaDerecgaIcono from "./Compoents/Iconos/FlechaDerecgaIcono";
 
-
-const arregloInicial = Array(400 + 13 + 9 + 10).fill(null);
+const arregloInicial = Array(400 + 13 + 9 + 10+18).fill(null);
 const filas = Array(17 + 2).fill(null);
 const columnas = Array(19 + 5).fill(null);
 
@@ -25,7 +24,7 @@ export default function App() {
   const [contadorIntegrantes, setContadorIntegrantes] = useState<{
     [key: string]: number;
   }>({
-    X: 0,
+  
     R: 0,
     T: 0,
     L: 0,
@@ -36,6 +35,25 @@ export default function App() {
     M: 0,
   });
   const [totalIntegrantes, setTotalIntegrantes] = useState<number>(0);
+
+  const hacerrecuentoDeIntegrantes = () => {
+    const datosDeControl = { ...contadorIntegrantes };
+    for (const clave in datosDeControl) {
+      const nuevoConteo = celdas.filter((cel) => cel === clave).length;
+      if (nuevoConteo !== datosDeControl[clave]) {
+        datosDeControl[clave] = nuevoConteo;
+      }
+    }
+    setContadorIntegrantes(datosDeControl);
+    const total = Object.values(datosDeControl).reduce(
+      (acc, curr) => acc + curr,
+      0
+    );
+    setTotalIntegrantes(total);
+  };
+  useEffect(() => {
+    hacerrecuentoDeIntegrantes();
+  }, [celdas]);
 
   const marcarCuadro = (index: number) => {
     if (escuadraSeleccionada === null || escuadraSeleccionada === "") return;
@@ -49,28 +67,16 @@ export default function App() {
       if (escuadraSeleccionada !== "X") {
         setTotalIntegrantes(totalIntegrantes + 1);
       }
-
-      setContadorIntegrantes({
-        ...contadorIntegrantes,
-        [escuadraSeleccionada]: contadorIntegrantes[escuadraSeleccionada] + 1,
-      });
     }
   };
   const desmarcarCuadro = (index: number) => {
     if (celdas[index] !== "") {
-      const escuadraActual = celdas[index];
       const nuevoArreglo = [...celdas];
       nuevoArreglo[index] = "";
       setCeldas(nuevoArreglo);
       if (escuadraSeleccionada !== "X") {
         setTotalIntegrantes(totalIntegrantes - 1);
       }
-
-      setContadorIntegrantes({
-        ...contadorIntegrantes,
-        [escuadraActual as string]:
-          contadorIntegrantes[escuadraActual as string] - 1,
-      });
     }
   };
 
@@ -101,7 +107,7 @@ export default function App() {
   const limiarHoja = () => {
     setCeldas(arregloInicial);
     setContadorIntegrantes({
-      X: 0,
+    
       R: 0,
       T: 0,
       L: 0,
@@ -128,12 +134,12 @@ export default function App() {
       onMouseUp={() => setMausePresionado(false)}
       className=" min-h-screen grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] h-full p-2 lg:p-10 "
     >
-      <div className=" flex flex-col "> 
+      <div className=" flex flex-col ">
         <p className="text-2xl text-gray-300 font-bold ">FIGURAS MUNDO BANDA</p>
-        <p className="text-xl text-gray-400 font-bold ">VERSION: 1.3</p>
-        <p className="text-xl text-gray-400  ">19 de septiembre 2025</p>
+        <p className="text-xl text-gray-400 font-bold ">VERSION: 1.4</p>
+        <p className="text-xl text-gray-400  ">30 de septiembre 2025</p>
         <p></p>
-        </div>
+      </div>
       <div ref={hojaReferencia} className="hoja">
         <div className="hoja__header">
           <input type="text" maxLength={50} className="hoja__titulo" />
@@ -174,13 +180,13 @@ export default function App() {
             </p>
           </div>
           <p className="hoja__total">
-            Total <span> {totalIntegrantes}</span>
+            Total: <span> {totalIntegrantes}</span>
           </p>
         </div>
         <div>
           <div className="hoja__cuerpo-grid">
             <div className="contenedorindexGrid-row">
-              <span className="mb-1.75 "></span>
+              {/*     <span className="mb-1.75 "></span>
               {filas
                 .slice(1)
                 .map((_, rowIndex) => filas.length - 1 - rowIndex)
@@ -188,7 +194,7 @@ export default function App() {
                   <span key={reverseIndex} className="indexGrid">
                     {reverseIndex < 10 ? `0${reverseIndex}` : reverseIndex}
                   </span>
-                ))}
+                ))} */}
             </div>
             <div className="hoja__grid">
               {celdas.map((celda, index) => {
@@ -211,15 +217,12 @@ export default function App() {
           </div>
           <div>
             <div className="hoja__contenedor-index">
-              <span className="ml-4.5"></span>
-            {columnas.map((_, colIndex) => (
-              <span
-                key={colIndex}
-                className="indexGrid"
-              >
-                {colIndex < 9 ? `0${colIndex + 1}` : colIndex + 1}
-              </span>
-              ))}
+              {/*     <span className="ml-4.5"></span>
+              {columnas.map((_, colIndex) => (
+                <span key={colIndex} className="indexGrid">
+                  {colIndex < 9 ? `0${colIndex + 1}` : colIndex + 1}
+                </span>
+              ))} */}
             </div>
             <div className="hoja__Orientacion">
               <span className="hoja__origientacion-item">
@@ -233,8 +236,19 @@ export default function App() {
               </span>
             </div>
 
-            <div className="mt-2">
-              <p className="hoja__nota">NOTA:</p>
+            <div className="mt-6">
+              <div className="flex flex-col gap-2">
+                <div className="flex gap-4 h-6">
+
+              <p className="hoja__nota">Canciones: </p><input type="text" className="hoja__inputFooter" />
+                </div>
+                <div className="flex gap-4 h-6">
+                    <p className="hoja__nota">Cierre: </p><input type="text" className="hoja__inputFooter" />
+
+                </div>
+
+                 <p className=" hoja__nota">Detalles:  </p>
+              </div>
               <textarea
                 rows={3}
                 maxLength={150}
