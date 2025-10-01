@@ -10,9 +10,9 @@ import FlechaizquierdaIcono from "./Compoents/Iconos/FlechaIzquierdaIcono";
 import FlechaDerecgaIcono from "./Compoents/Iconos/FlechaDerecgaIcono";
 
 const arregloInicial = Array(400 + 13 + 9 + 10+18).fill(null);
-const filas = Array(17 + 2).fill(null);
+/* const filas = Array(17 + 2).fill(null);
 const columnas = Array(19 + 5).fill(null);
-
+ */
 export default function App() {
   const hojaReferencia = useRef<HTMLDivElement>(null);
   const [mausePresionado, setMausePresionado] = useState(false);
